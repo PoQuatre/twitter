@@ -1,7 +1,7 @@
-import express from 'express';
-import morgan from 'morgan';
-import compression from 'compression';
-import { registerClient } from 'registerClient';
+const express = require('express');
+const morgan = require('morgan');
+const compression = require('compression');
+const { registerClient } = require('./registerClient');
 
 const app = express();
 
