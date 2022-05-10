@@ -1,7 +1,14 @@
+require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 const compression = require('compression');
-const { registerClient } = require('./registerClient');
+const { registerClient } = require('./config/registerClient');
+const mongoose = require('mongoose');
+
+if (!process.env.MONGO_URL) {
+  throw new Error('The environment variable `MONGO_URL` is not set!');
+}
+mongoose.connect(process.env.MONGO_URL);
 
 const app = express();
 
