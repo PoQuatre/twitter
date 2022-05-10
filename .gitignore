@@ -1,0 +1,15 @@
+# Logs
+logs/
+*.log
+yarn-debug.log*
+yarn-error.log*
+
+node_modules/
+dist/
+
+*.tsbuildinfo
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.DS_Store

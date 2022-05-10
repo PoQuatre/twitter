@@ -1,0 +1,47 @@
+{
+  "name": "mern-monorepo-template",
+  "version": "1.0.0",
+  "license": "MIT",
+  "description": "A monorepo template with a set of useful tools for building a MERN app.",
+  "author": "PoQuatre <leflem.mateo2002@gmail.com>",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "yarn workspace server dev",
+    "build": "concurrently --kill-others-on-fail -n client,server -c blue,yellow \"yarn build:client\" \"yarn build:server\"",
+    "build:client": "yarn workspace client build",
+    "build:server": "yarn workspace server build",
+    "start": "yarn workspace server start",
+    "clean": "concurrently --kill-others-on-fail -n client,server -c blue,yellow \"yarn clean:client\" \"yarn clean:server\"",
+    "clean:client": "yarn workspace client clean",
+    "clean:server": "yarn workspace server clean",
+    "commit": "git-cz",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,html,md,svg,yml}": "prettier --write"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    },
+    "cz-customizable": {
+      "config": ".commitizenrc.json"
+    }
+  },
+  "dependencies": {
+    "concurrently": "^7.1.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^16.2.4",
+    "@commitlint/config-conventional": "^16.2.4",
+    "commitizen": "^4.2.4",
+    "cz-customizable": "^6.3.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^12.4.1",
+    "prettier": "^2.6.2",
+    "rimraf": "^3.0.2"
+  }
+}
