@@ -1,0 +1,20 @@
+.header {
+  display: flex;
+}
+
+.head {
+  width: 35px;
+  height: 35px;
+  fill: rgb(192, 246, 255);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.footer {
+  border-top: none;
+}
+
+.button {
+  width: 100%;
+}
