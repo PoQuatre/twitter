@@ -1,54 +1,22 @@
-.logo{
-    width: 50px;
-    height: 50px;
+.logo {
+  max-height: 380px;
+  fill: #ffffff;
 }
 
-.asideRow{
-    background-image: url("../../assets/img/BackgroundRegister.png");
-    background-attachment: fixed;
-    width: 500px;
-     height: 600px;
-     margin-right: 20px;
-     display: flex;
-     flex-direction: column;
-     justify-content: center;
-     fill: aliceblue;
-}
-.logohead{
-    width: 25px;
-    height: 25px;
-    fill: rgb(236, 242, 247);
-    position: absolute;
-    left: 50%;
-    transform: translateX(50%);
+.smallLogo {
+  max-width: 50px;
+  fill: var(--bs-primary);
 }
 
-.position{
-    display: flex;
-    align-items: center
+.container {
+  min-height: 100vh;
 }
 
-.header{
-    display: flex;
-    flex-direction: row;
-    border-bottom: 1px solid black;
-}
-.body{
-    background-color: antiquewhite;
-}
-.footer {
-    border: 2px solid black;
-    box-shadow: rgb(101 119 134 / 20%) 0px 0px 7px,
-     rgb(101 119 134 / 15%) 0px 1px 3px 1px;
-     padding-left: 150px;
-     padding-right: 150px;
-     padding-top: 30px;
-     padding-bottom: 30px;
-     
+.background {
+  background-image: url('../../assets/img/AuthBackground.png');
+  background-position: center;
 }
 
-.modal-content {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+.btnContainer {
+  max-width: 20rem;
 }

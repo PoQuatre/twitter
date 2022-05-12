@@ -17,39 +17,61 @@ function Auth() {
   const handleShowLogin = () => setShowLogin(true);
 
   return (
-    <div className="twoRow d-flex">
-      <div className={styles.asideRow}>
-        <Logo />
-      </div>
+    <div className="row gx-0 min-vh-100">
+      <div className="col-12 col-lg-6 order-lg-1">
+        <div className="container-sm px-3 py-5 px-sm-5">
+          <Logo className={styles.smallLogo} />
 
-      <div className="Row">
-        <div>
-          <img src={logoImg} alt="logo twitter" className={styles.logo} />
-          <h1>Ça se passe maintenant</h1>
-          <h2>Rejoignez Twitter dès aujourd'hui.</h2>
-        </div>
+          <h1 className="mt-5 fw-bolder">Ça se passe maintenant</h1>
+          <h2 className="mt-4 mt-lg-5 fs-3">
+            Rejoignez Twitter dès aujourd'hui.
+          </h2>
 
-        <div className="form">
-          <Button variant="primary" onClick={handleShowRegister}>
-            Inscrivez-vous
-          </Button>
+          <div
+            className={`${styles.btnContainer} my-5 d-flex flex-column gap-4 mx-auto mx-sm-0`}
+          >
+            <Button
+              variant="primary"
+              size="lg"
+              onClick={handleShowRegister}
+              className="w-100 rounded-pill"
+            >
+              Inscrivez-vous
+            </Button>
 
-          <p>Ou</p>
+            <div className="d-flex align-items-center">
+              <hr className="flex-grow-1 my-0" />
+              <span className="mx-4">Ou</span>
+              <hr className="flex-grow-1 my-0" />
+            </div>
 
-          <Button variant="outline-primary" onClick={handleShowLogin}>
-            Connectez vous
-          </Button>
+            <Button
+              variant="outline-primary"
+              size="lg"
+              onClick={handleShowLogin}
+              className="w-100 rounded-pill"
+            >
+              Connectez vous
+            </Button>
+          </div>
 
           <RegisterModal show={showRegister} onClose={handleCloseRegister} />
           <LoginModal show={showLogin} onClose={handleCloseLogin} />
-        </div>
 
-        <div className="quote">
           <p>
             En vous inscrivant, vous acceptez les Conditions d'Utilisation et la
             Politique de Confidentialité, incluant l'Utilisation de Cookies.
           </p>
         </div>
+      </div>
+
+      <div
+        className={`
+          ${styles.background} col-12 col-lg-6 d-flex justify-content-center
+          align-items-center
+        `}
+      >
+        <Logo className={styles.logo} />
       </div>
     </div>
   );
