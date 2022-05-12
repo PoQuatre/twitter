@@ -1,0 +1,22 @@
+.logo {
+  max-height: 380px;
+  fill: #ffffff;
+}
+
+.smallLogo {
+  max-width: 50px;
+  fill: var(--bs-primary);
+}
+
+.container {
+  min-height: 100vh;
+}
+
+.background {
+  background-image: url('../../assets/img/AuthBackground.png');
+  background-position: center;
+}
+
+.btnContainer {
+  max-width: 20rem;
+}

@@ -1,0 +1,20 @@
+.header {
+  display: flex;
+}
+
+.logo {
+  width: 35px;
+  height: 35px;
+  fill: var(--bs-primary);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.footer {
+  border-top: none;
+}
+
+.button {
+  width: 100%;
+}

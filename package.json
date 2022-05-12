@@ -15,7 +15,7 @@
     "prepare": "husky install"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,html,md,svg,yml}": "prettier --write"
+    "*.{js,jsx,ts,tsx,json,html,md,svg,yml,css}": "prettier --write"
   },
   "config": {
     "commitizen": {

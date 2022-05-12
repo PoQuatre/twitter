@@ -1,18 +1,13 @@
-import { useEffect, useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Auth from './pages/auth/Auth';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export const App = () => {
-  const [response, setResponse] = useState('');
-
-  useEffect(() => {
-    fetch('/api/hello')
-      .then((res) => res.text())
-      .then((res) => setResponse(res));
-  }, []);
-
   return (
     <>
-      <p>Hello from the client!</p>
-      {response && <p>{response}</p>}
+      <Routes>
+        <Route path="/auth" exact element={<Auth />} />
+      </Routes>
     </>
   );
 };
