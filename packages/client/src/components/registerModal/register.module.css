@@ -2,10 +2,10 @@
   display: flex;
 }
 
-.head {
+.logo {
   width: 35px;
   height: 35px;
-  fill: rgb(192, 246, 255);
+  fill: var(--bs-primary);
   position: absolute;
   left: 50%;
   transform: translateX(-50%);

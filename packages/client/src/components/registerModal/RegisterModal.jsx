@@ -26,10 +26,10 @@ function RegisterModal(props) {
   };
 
   return (
-    <Modal show={show} onHide={onClose}>
+    <Modal show={show} onHide={onClose} centered>
       <div className={styles.header}>
         <Modal.Header closeButton style={{ borderBottom: 'none' }}>
-          <Logo className={styles.head} />
+          <Logo className={styles.logo} />
         </Modal.Header>
       </div>
 
@@ -89,7 +89,7 @@ function RegisterModal(props) {
               })}
             />
             <label for="password" class="form-label">
-              Password
+              Mot de passe
             </label>
             {errors.password?.type === 'required' && (
               <span>Le mot de passe est requis</span>
@@ -103,11 +103,11 @@ function RegisterModal(props) {
         <Modal.Footer className={[styles.footer, 'container px-5']}>
           <Button
             type="submit"
-            variant="light"
+            variant="outline-secondary"
             size="lg"
             className={[styles.button, 'rounded-pill']}
           >
-            Se connecter
+            S'inscrire
           </Button>
         </Modal.Footer>
       </form>
