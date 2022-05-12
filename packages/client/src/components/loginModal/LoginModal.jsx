@@ -47,7 +47,7 @@ function LoginModal(props) {
               placeholder="email"
               {...register('email', { required: true })}
             />
-            <label for="email" className="form-label hover-text-danger">
+            <label htmlFor="email" className="form-label hover-text-danger">
               Adresse Email
             </label>
             {errors.email?.type === 'required' && (
@@ -66,7 +66,7 @@ function LoginModal(props) {
                 maxLength: 25,
               })}
             />
-            <label for="password" className="form-label">
+            <label htmlFor="password" className="form-label">
               Mot de passe
             </label>
             {errors.password?.type === 'required' && (

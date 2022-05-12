@@ -41,7 +41,7 @@ function RegisterModal(props) {
           <div className="form-floating mb-4">
             <input
               type="text"
-              class="form-control hover-border-primary"
+              className="form-control hover-border-primary"
               placeholder="username"
               {...register('username', {
                 required: true,
@@ -49,28 +49,64 @@ function RegisterModal(props) {
                 maxLength: 20,
               })}
             />
-            <label for="username" class="form-label">
+            <label htmlFor="username" className="form-label">
               Nom et prénom
             </label>
             {errors.username?.type === 'required' && (
               <span>Le nom est obligatoire</span>
             )}
             {errors.username?.type === 'minLength' && (
-              <span>Le nom doit contenir plus de 4 caractère </span>
+              <span>Le nom doit contenir plus de 4 caractères</span>
             )}
             {errors.username?.type === 'maxLength' && (
-              <span>Le nom doit contenir moins de 10 caractère </span>
+              <span>Le nom doit contenir moins de 20 caractères</span>
             )}
           </div>
 
-          <div class="form-floating mb-4">
+          <div className="form-floating mb-4">
+            <input
+              type="text"
+              className="form-control hover-border-primary"
+              placeholder="username"
+              {...register('handle', {
+                required: true,
+                minLength: 4,
+                maxLength: 20,
+                pattern: /^[a-zA-Z0-9_-]{4,20}$/,
+              })}
+            />
+            <label htmlFor="handle" className="form-label">
+              Nom d'utilisateur
+            </label>
+            {errors.handle?.type === 'required' && (
+              <span>Le nom d'utilisateur est requis</span>
+            )}
+            {errors.handle?.type === 'minLength' && (
+              <span>
+                Le nom d'utilisateur doit contenir plus de 4 caractères
+              </span>
+            )}
+            {errors.handle?.type === 'maxLength' && (
+              <span>
+                Le nom d'utilisateur doit contenir moins de 20 caractères
+              </span>
+            )}
+            {errors.handle?.type === 'pattern' && (
+              <span>
+                Le nom d'utilisateur ne peut contenir que des caractères
+                alphanumériques, <code>_</code> et <code>-</code>.
+              </span>
+            )}
+          </div>
+
+          <div className="form-floating mb-4">
             <input
               type="email"
-              class="form-control hover-border-primary "
+              className="form-control hover-border-primary "
               placeholder="email"
               {...register('email', { required: true })}
             />
-            <label for="email" class="form-label hover-text-danger">
+            <label htmlFor="email" className="form-label hover-text-danger">
               Adresse Email
             </label>
             {errors.email?.type === 'required' && (
@@ -78,17 +114,18 @@ function RegisterModal(props) {
             )}
           </div>
 
-          <div class="form-floating mb-4">
+          <div className="form-floating mb-4">
             <input
               type="password"
-              class="form-control hover-border-primary"
+              className="form-control hover-border-primary"
               placeholder="password"
               {...register('password', {
                 required: true,
                 minLength: 8,
+                pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$/,
               })}
             />
-            <label for="password" class="form-label">
+            <label htmlFor="password" className="form-label">
               Mot de passe
             </label>
             {errors.password?.type === 'required' && (
@@ -96,6 +133,37 @@ function RegisterModal(props) {
             )}
             {errors.password?.type === 'minLength' && (
               <span>Le mot de passe doit avoir plus de 8 caractère</span>
+            )}
+            {errors.password?.type === 'pattern' && (
+              <span>
+                Le mot de passe doit contenir au minimum une lettre majuscule,
+                une lettre minuscule, et un chiffre
+              </span>
+            )}
+          </div>
+
+          <div className="form-floating mb-4">
+            <input
+              type="password"
+              className="form-control hover-border-primary"
+              placeholder="password"
+              {...register('passwordConfirm', {
+                required: true,
+                minLength: 8,
+                validate: (value) => {
+                  const password = getValues('password');
+                  return value === password;
+                },
+              })}
+            />
+            <label htmlFor="password" className="form-label">
+              Confirmation du mot de passe
+            </label>
+            {errors.passwordConfirm?.type === 'required' && (
+              <span>La confirmation du mot de passe est requise</span>
+            )}
+            {errors.passwordConfirm?.type === 'validate' && (
+              <span>Les mots de passe ne correspondent pas</span>
             )}
           </div>
         </Modal.Body>
