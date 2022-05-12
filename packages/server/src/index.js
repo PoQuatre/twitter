@@ -6,7 +6,7 @@ const morgan = require('morgan');
 const compression = require('compression');
 const { registerClient } = require('./config/registerClient');
 const mongoose = require('mongoose');
-const { AuthRouter } = require('./routes');
+const { AuthRouter, UserRouter } = require('./routes');
 
 if (!process.env.MONGO_URL) {
   throw new Error('The environment variable `MONGO_URL` is not set!');
@@ -39,6 +39,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/auth', AuthRouter);
+app.use('/api/users', UserRouter);
 
 registerClient(app); // Keep this line after all your routes
 
