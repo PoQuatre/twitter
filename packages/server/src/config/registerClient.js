@@ -44,16 +44,21 @@ const registerClient = async (app) => {
     app.use(vite.middlewares);
 
     app.use('*', async (req, res) => {
-      const url = req.originalUrl;
+      try {
+        const url = req.originalUrl;
 
-      let template = fs.readFileSync(resolve('index.html'), 'utf-8');
-      template = await vite.transformIndexHtml(url, template);
+        let template = fs.readFileSync(resolve('index.html'), 'utf-8');
+        template = await vite.transformIndexHtml(url, template);
 
-      const render = (await vite.ssrLoadModule('/src/entry-server.jsx')).render;
+        const render = (await vite.ssrLoadModule('/src/entry-server.jsx'))
+          .render;
 
-      await renderIndex(res, url, template, render, (e) => {
-        vite.ssrFixStacktrace(e);
-      });
+        await renderIndex(res, url, template, render, (e) => {
+          vite.ssrFixStacktrace(e);
+        });
+      } catch (err) {
+        res.status(500).send('An error occurred while processing your request');
+      }
     });
   } else {
     app.use(express.static(resolve('dist/ssr-client'), { index: false }));
