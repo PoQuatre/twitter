@@ -25,15 +25,70 @@ router.post(
     const { username, email, password, handle } = req.body;
 
     try {
-      await UserModel.create({
-        username,
-        email,
-        password: await bcrypt.hash(password, 10),
-        handle,
+      const matchedUsers = await UserModel.find({
+        $or: [
+          {
+            email: {
+              $regex: email,
+              $options: 'i',
+            },
+          },
+          {
+            handle: {
+              $regex: handle,
+              $options: 'i',
+            },
+          },
+        ],
       });
-      res.json({ success: true });
-    } catch (error) {
-      console.log(error);
+
+      if (matchedUsers.length !== 0) {
+        const errors = [];
+
+        for (const user of matchedUsers) {
+          if (user.email.toLowerCase() === email.toLowerCase()) {
+            errors.push({
+              location: 'email',
+              cause: 'Un utilisateur avec cette adresse existe déjà',
+            });
+          } else if (user.handle.toLowerCase() === handle.toLowerCase()) {
+            errors.push({
+              location: 'handle',
+              cause: 'Un utilisateur avec ce nom existe déjà',
+            });
+          }
+        }
+
+        res.status(409).json({
+          success: false,
+          errors,
+        });
+      } else {
+        const user = await UserModel.create({
+          username,
+          email,
+          password: await bcrypt.hash(password, 10),
+          handle,
+        });
+
+        req.login(user, (err) => {
+          if (err) {
+            res.status(500).json({
+              success: false,
+              msg: 'An error occurred while processing your request',
+            });
+          } else {
+            res.json({
+              success: true,
+              user: {
+                username,
+                handle,
+              },
+            });
+          }
+        });
+      }
+    } catch (err) {
       res.status(500).json({
         success: false,
         msg: 'An error occurred while processing your request',
@@ -47,7 +102,13 @@ router.post(
   body('email').normalizeEmail(),
   passport.authenticate('local'),
   (req, res) => {
-    res.json(req.user);
+    res.json({
+      success: true,
+      user: {
+        username: req.user.username,
+        handle: req.user.handle,
+      },
+    });
   },
 );
 
