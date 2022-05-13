@@ -3,26 +3,47 @@ import Button from 'react-bootstrap/Button';
 import Logo from '../Logo';
 import styles from './register.module.css';
 import { useForm } from 'react-hook-form';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function RegisterModal(props) {
   const { show, onClose } = props;
   const {
     register,
     handleSubmit,
+    getValues,
+    setError,
     formState: { errors },
   } = useForm();
+  const [globalError, setGlobalError] = useState('');
+  const navigate = useNavigate();
+
   const onSubmit = (data) => {
-    delete data.confirmPassword;
-    fetch('#', {
+    delete data.passwordConfirm;
+    setGlobalError('');
+
+    fetch('/auth/register', {
       method: 'POST',
-      headers: new Headers({ 'content-type': 'application/json' }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(data),
     })
-      .then((response) => response.json())
-      .then((json) => {
-        console.log(json);
-        alert('You are registered');
-      });
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.success) {
+          navigate(`/profile/${res.user.handle}`);
+        } else {
+          for (const error of res.errors) {
+            setError(error.location, { type: 'custom', message: error.cause });
+          }
+        }
+      })
+      .catch((_err) =>
+        setGlobalError(
+          'Une erreur est survenue lors du traitement de votre requête',
+        ),
+      );
   };
 
   return (
@@ -38,6 +59,8 @@ function RegisterModal(props) {
         className="d-flex flex-column align-items-center"
       >
         <Modal.Body className="container px-5">
+          {globalError && <p>{globalError}</p>}
+
           <div className="form-floating mb-4">
             <input
               type="text"
@@ -97,6 +120,9 @@ function RegisterModal(props) {
                 alphanumériques, <code>_</code> et <code>-</code>.
               </span>
             )}
+            {errors.handle?.type === 'custom' && (
+              <span>{errors.handle?.message}</span>
+            )}
           </div>
 
           <div className="form-floating mb-4">
@@ -111,6 +137,9 @@ function RegisterModal(props) {
             </label>
             {errors.email?.type === 'required' && (
               <span>L'adresse est requise</span>
+            )}
+            {errors.email?.type === 'custom' && (
+              <span>{errors.email?.message}</span>
             )}
           </div>
 

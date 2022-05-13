@@ -3,6 +3,8 @@ import Modal from 'react-bootstrap/Modal';
 import { useForm } from 'react-hook-form';
 import styles from './login.module.css';
 import Logo from '../Logo';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function LoginModal(props) {
   const { show, onClose } = props;
@@ -11,19 +13,31 @@ function LoginModal(props) {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const [globalError, setGlobalError] = useState('');
+  const navigate = useNavigate();
 
   const onSubmit = (data) => {
-    delete data.confirmPassword;
+    setGlobalError('');
 
-    fetch('#', {
+    fetch('/auth/login', {
       method: 'POST',
-      headers: new Headers({ 'content-type': 'application/json' }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(data),
     })
-      .then((response) => response.json())
-      .then((json) => {
-        console.log(json);
-        alert('You are registered');
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.success) {
+          navigate(`/profile/${res.user.handle}`);
+        } else {
+          setGlobalError("L'email ou le mot de passe est invalide");
+        }
+      })
+      .catch((_err) => {
+        setGlobalError(
+          'Une erreur est survenue lors du traitement de votre requête',
+        );
       });
   };
 
@@ -40,6 +54,8 @@ function LoginModal(props) {
         className="d-flex flex-column align-items-center"
       >
         <Modal.Body className="container px-5">
+          {globalError && <p>{globalError}</p>}
+
           <div className="form-floating mb-4">
             <input
               type="email"

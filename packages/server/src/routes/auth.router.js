@@ -51,7 +51,9 @@ router.post(
               location: 'email',
               cause: 'Un utilisateur avec cette adresse existe déjà',
             });
-          } else if (user.handle.toLowerCase() === handle.toLowerCase()) {
+          }
+
+          if (user.handle.toLowerCase() === handle.toLowerCase()) {
             errors.push({
               location: 'handle',
               cause: 'Un utilisateur avec ce nom existe déjà',
@@ -100,7 +102,19 @@ router.post(
 router.post(
   '/login',
   body('email').normalizeEmail(),
-  passport.authenticate('local'),
+  (req, res, next) => {
+    passport.authenticate('local', (err, user) => {
+      if (err || !user) {
+        res.status(401).json({
+          success: false,
+          message: 'Unauthorized',
+        });
+      } else {
+        req.user = user;
+        next();
+      }
+    })(req, res, next);
+  },
   (req, res) => {
     res.json({
       success: true,
