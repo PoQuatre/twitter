@@ -1,0 +1,14 @@
+.navWidth {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: space-between;
+  margin: 0px;
+}
+
+.logo {
+  width: 35px;
+  height: 35px;
+  fill: var(--bs-primary);
+  margin-left: auto;
+}

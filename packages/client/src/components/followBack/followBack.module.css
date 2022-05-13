@@ -1,0 +1,17 @@
+.follow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+span {
+  color: grey;
+  font-size: 14px;
+}
+
+followBtn {
+  background-color: #000;
+  cursor: pointer;
+  margin-right: 20px;
+  color: white;
+}
